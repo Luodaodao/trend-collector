@@ -1,0 +1,166 @@
+# ====================================
+# 平台热点捕捉系统 - 配置文件模板
+# 由 setup_feishu.py 自动生成 config.yaml 并填入飞书信息
+# ====================================
+
+# TikHub API 配置（付费源，可选）
+# 不填也能跑：只采免费源（含 NewsBing，已覆盖 10 个平台）
+tikhub:
+  api_key: ""
+  base_url: "https://api.tikhub.io"
+  enabled: false          # 填了 key 之后改成 true 才会走付费采集
+
+# 飞书多维表格配置（由 setup_feishu.py 自动填写）
+feishu:
+  app_token: "__APP_TOKEN__"
+  hot_pool_table_id: "__HOT_POOL_TABLE_ID__"
+  viral_pool_table_id: "__VIRAL_POOL_TABLE_ID__"
+
+# 采集品类关键词（按需要增删）
+keywords:
+  # ===== 数码大类 =====
+  - "数码"
+  - "手机"
+  - "iPhone"
+  - "华为"
+  - "小米"
+  - "OPPO"
+  - "vivo"
+  - "电脑"
+  - "笔记本"
+  - "MacBook"
+  - "Windows"
+  - "平板"
+  - "iPad"
+  - "相机"
+  - "镜头"
+  - "无人机"
+  - "大疆"
+  - "硬件"
+  - "芯片"
+  - "处理器"
+  - "显卡"
+  - "耳机"
+  - "音箱"
+  - "智能手表"
+  - "手环"
+  - "充电"
+  - "配件"
+  - "显示器"
+  - "键盘"
+  - "鼠标"
+  - "存储"
+  - "硬盘"
+  - "U盘"
+
+  # ===== 电车大类 =====
+  - "电车"
+  - "电动汽车"
+  - "新能源"
+  - "特斯拉"
+  - "Tesla"
+  - "比亚迪"
+  - "蔚来"
+  - "小鹏"
+  - "理想汽车"
+  - "自动驾驶"
+  - "智能驾驶"
+  - "充电桩"
+  - "电池"
+  - "锂电池"
+
+  # ===== AI大类 =====
+  - "AI"
+  - "人工智能"
+  - "大模型"
+  - "GPT"
+  - "OpenAI"
+  - "Claude"
+  - "Anthropic"
+  - "Gemini"
+  - "Google"
+  - "DeepSeek"
+  - "豆包"
+  - "字节"
+  - "百度"
+  - "文心一言"
+  - "通义千问"
+  - "阿里"
+  - "腾讯"
+  - "混元"
+  - "Codex"
+  - "Copilot"
+  - "ChatGPT"
+  - "Midjourney"
+  - "Stable Diffusion"
+  - "Sora"
+  - "AI绘画"
+  - "AI写作"
+  - "AI视频"
+  - "AI工具"
+  - "Agent"
+  - "智能体"
+  - "机器人"
+  - "算力"
+  - "AIGC"
+  - "LLM"
+  - "prompt"
+  - "提示词"
+  - "API"
+
+# 免费热榜配置（不需要任何 Key）
+free_hot:
+  baidu_count: 100            # 百度热搜条数
+  bilibili_count: 100         # B站热门条数
+  toutiao_count: 100          # 今日头条热榜条数
+  netease_count: 100          # 网易新闻热榜条数（该接口可能已失效）
+  qqnews_count: 100           # 腾讯新闻热榜条数（该接口可能已失效）
+  sspai_count: 100            # 少数派最新条数（可能需登录）
+  juejin_count: 100           # 掘金热门条数
+  ithome_count: 100           # IT之家资讯条数
+  github_count: 25            # GitHub Trending条数
+
+# NewsBing 多平台热点聚合（免 Key，本系统最重要的源）
+# 覆盖：小红书创作热点 / 微博热搜 / 知乎热榜 / B站热门·排行榜·热搜 /
+#       抖音热榜 / 百度热搜 / 今日头条 / V2EX / X / Hacker News
+newsbing:
+  enabled: true
+  count_per_source: 100       # 每个榜单取前N条（取回后再按关键词过滤）
+  timeout: 120                # 单次请求超时（秒）
+  retries: 3                  # 重试次数（响应可能中途断开，多轮累积互补）
+
+# 各平台付费采集开关（需要 tikhub.enabled=true 才生效）
+platforms:
+  douyin:
+    enabled: false            # 抖音热榜（付费）
+    hot_list_count: 100
+    search_count: 20
+  xiaohongshu:
+    enabled: false            # 小红书搜索（付费，用于抓低粉爆款）
+    search_count: 30
+  bilibili:
+    enabled: false            # B站TikHub热榜（免费源已覆盖）
+    hot_list_count: 100
+    search_count: 20
+  wechat_mp:
+    enabled: false
+    search_count: 20
+  wechat_channels:
+    enabled: false
+    search_count: 20
+  youtube:
+    enabled: false
+    search_count: 20
+
+# 爆款筛选阈值（点赞数超过此值才进入拆解池）
+viral_threshold:
+  min_likes: 5000
+  min_comments: 200
+
+# 爆款时间窗口（只取最近N小时内发布的内容）
+viral_window_hours: 48
+
+# 日志配置
+log:
+  level: "INFO"
+  file: "trend_collector.log"
