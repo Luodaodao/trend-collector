@@ -1,0 +1,10 @@
+# 实际配置含飞书 token，不要提交
+config.yaml
+config.yaml.bak
+
+# 运行时产物
+*.log
+__pycache__/
+*.pyc
+tbl*.ndjson
+tbl*.manifest.json
